@@ -17,7 +17,7 @@
 		<h1>Inserat bearbeiten</h1>
 
 		{#if form?.errors}
-			<div class="alert alert-error">Bitte überprüfe deine Eingaben.</div>
+			<div class="alert alert-error">⚠️ Bitte überprüfe die rot markierten Felder.</div>
 		{/if}
 
 		<InseratForm

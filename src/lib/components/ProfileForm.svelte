@@ -1,5 +1,7 @@
 <script>
 	import CategoryPicker from '$lib/components/CategoryPicker.svelte';
+	import { tick } from 'svelte';
+	import { browser } from '$app/environment';
 
 	/** @type {Record<string, any>} */
 	export let profile = {};
@@ -7,6 +9,20 @@
 	export let errors = null;
 	export let submitLabel = 'Profil erstellen';
 	export let cancelHref = '/profil';
+
+	$: if (errors) scrollToFirstError();
+
+	async function scrollToFirstError() {
+		if (!browser) return;
+		await tick();
+		const field = document.querySelector('.form-error');
+		const group = field?.closest('.form-group, .role-fieldset') ?? field;
+		if (group) {
+			group.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			const input = group.querySelector('input, textarea');
+			if (input instanceof HTMLElement) input.focus();
+		}
+	}
 </script>
 
 <form method="POST" class="form stack-md">

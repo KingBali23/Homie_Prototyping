@@ -205,6 +205,18 @@ img {
 	color: var(--color-error);
 }
 
+.form-group:has(.form-error) input,
+.form-group:has(.form-error) textarea,
+.form-group:has(.form-error) select {
+	border-color: var(--color-error);
+}
+
+.form-group:has(.form-error) input:focus,
+.form-group:has(.form-error) textarea:focus,
+.form-group:has(.form-error) select:focus {
+	box-shadow: 0 0 0 3px var(--color-error-soft);
+}
+
 .form-row {
 	display: grid;
 	grid-template-columns: 1fr 1fr;

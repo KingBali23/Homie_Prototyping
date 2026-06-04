@@ -1,5 +1,7 @@
 <script>
 	import CategoryPicker from '$lib/components/CategoryPicker.svelte';
+	import { tick } from 'svelte';
+	import { browser } from '$app/environment';
 
 	/** @type {Record<string, any>} */
 	export let inserat = {};
@@ -7,6 +9,29 @@
 	export let errors = null;
 	export let submitLabel = 'Inserat veröffentlichen';
 	export let cancelHref = '/inserate';
+
+	let featuresText = Array.isArray(inserat.features)
+		? inserat.features.join(', ')
+		: (inserat.features ?? '');
+
+	$: featureTags = featuresText
+		.split(',')
+		.map((f) => f.trim())
+		.filter(Boolean);
+
+	$: if (errors) scrollToFirstError();
+
+	async function scrollToFirstError() {
+		if (!browser) return;
+		await tick();
+		const field = document.querySelector('.form-error');
+		const group = field?.closest('.form-group') ?? field;
+		if (group) {
+			group.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			const input = group.querySelector('input, textarea');
+			if (input instanceof HTMLElement) input.focus();
+		}
+	}
 </script>
 
 <form method="POST" class="form stack-md">
@@ -90,15 +115,22 @@
 	</div>
 
 	<div class="form-group">
-		<label for="features">Ausstattung (kommagetrennt)</label>
+		<label for="features">Ausstattung</label>
 		<input
 			id="features"
 			name="features"
 			type="text"
-			value={Array.isArray(inserat.features) ? inserat.features.join(', ') : (inserat.features ?? '')}
-			placeholder="WLAN, Balkon, Waschmaschine, möbliert"
+			bind:value={featuresText}
+			placeholder="z. B. WLAN, Balkon, Waschmaschine, möbliert"
 		/>
-		<span class="form-hint">Wird automatisch als Liste angezeigt.</span>
+		<span class="form-hint">Mehrere Angaben mit Komma trennen.</span>
+		{#if featureTags.length > 0}
+			<ul class="feature-preview" aria-label="Vorschau der Ausstattung">
+				{#each featureTags as tag}
+					<li>{tag}</li>
+				{/each}
+			</ul>
+		{/if}
 	</div>
 
 	<div class="form-group">
@@ -159,6 +191,23 @@
 <style>
 	.form {
 		max-width: 720px;
+	}
+
+	.feature-preview {
+		list-style: none;
+		padding: 0;
+		margin: 0.6rem 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+
+	.feature-preview li {
+		background: var(--color-surface-alt);
+		border: 1px solid var(--color-border);
+		padding: 0.3rem 0.7rem;
+		border-radius: 999px;
+		font-size: 0.85rem;
 	}
 
 	.contact-fieldset {

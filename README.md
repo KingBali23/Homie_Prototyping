@@ -177,9 +177,9 @@ Die Durchführung erfolgte phasenbasiert entlang des im Unterricht eingeführten
 
 - **Zusammenfassung der Resultate:** Der Hauptworkflow (suchen → Detail → Kontakt) funktioniert sehr gut – beide Testpersonen lösten ihn ohne Hilfe und schnell. Die Oberfläche wird als klar und aufgeräumt wahrgenommen. Schwierigkeiten konzentrieren sich auf den Workflow „Inserat erstellen", insbesondere auf das Ausstattungsfeld, die Auffindbarkeit des Einstiegs und die Sichtbarkeit der Fehlermeldung.
 - **Abgeleitete Verbesserungen (priorisiert):**
-  1. **Ausstattungsfeld klarer gestalten** (I1, hoch): Auswahl-/Tag-basierte Eingabe oder deutlich erklärendes Beispiel statt reinem Freitext.
+  1. **Ausstattungsfeld klarer gestalten** (I1, hoch) – **umgesetzt** (siehe Kap. 4.3): klareres Label, Beispiel, expliziter Komma-Hinweis und Live-Vorschau der erkannten Tags.
   2. **Einstieg „Inserat erstellen" prominenter machen** (I2, hoch): auffälligerer Call-to-Action, auch direkt in der Übersicht.
-  3. **Fehlermeldungen deutlicher anzeigen** (I3, mittel): hervorgehobene Meldung, automatisches Scrollen zum Fehler, klare Feldmarkierung.
+  3. **Fehlermeldungen deutlicher anzeigen** (I3, mittel) – **umgesetzt** (siehe Kap. 4.3): hervorgehobene Meldung, rote Markierung der betroffenen Felder und automatisches Scrollen zum ersten Fehler.
   4. **Filterverhalten verständlicher machen** (I4, mittel): Live-Filterung oder klarer Hinweis, dass „Filtern" geklickt werden muss.
   5. **Kontakt-Hinweis ergänzen** (I5, niedrig): am E-Mail-Button verdeutlichen, dass eine E-Mail vorbereitet (nicht sofort gesendet) wird.
 
@@ -203,6 +203,17 @@ Die Durchführung erfolgte phasenbasiert entlang des im Unterricht eingeführten
 - **Wo umgesetzt:** `src/routes/inserate/` (Übersicht, `neu`, `[id]`, `[id]/bearbeiten`), `+error.svelte`.
 - **Referenz:** Kap. 3.4.
 - **Aus Evaluation abgeleitet?:** Nein.
+
+### 4.3 Verbesserungen aus der Usability-Evaluation
+
+- **Beschreibung & Nutzen:** Auf Basis der in Kap. 3.5 dokumentierten Findings wurden zwei Verbesserungen am Inserat-Formular umgesetzt:
+  - **Ausstattungsfeld (I1):** klareres Label, Beispiel-Platzhalter und expliziter Hinweis zur Komma-Trennung sowie eine **Live-Vorschau**, die jede eingegebene Angabe sofort als Tag anzeigt. So ist direkt erkennbar, wie mehrere Angaben eingetragen werden – beide Testpersonen hatten hier Mühe (Schweregrad 3).
+  - **Fehlermeldungen (I3):** Die Hinweismeldung wurde deutlicher formuliert, betroffene Felder werden rot markiert und beim Absenden wird automatisch zum ersten Fehler gescrollt und dieser fokussiert. Damit wird die zuvor übersehene Fehlermeldung zuverlässig wahrgenommen.
+- **Wo umgesetzt:**
+  - **Frontend:** `src/lib/components/InseratForm.svelte` (Live-Vorschau, Scroll-zu-Fehler, Hinweise), `src/app.css` (rote Markierung über `:has(.form-error)`), Fehlermeldung in `src/routes/inserate/neu/+page.svelte` und `src/routes/inserate/[id]/bearbeiten/+page.svelte`. Dieselbe Scroll-Logik wurde zur Konsistenz auch im `ProfileForm.svelte` ergänzt.
+  - **Backend/Datenbank:** keine Änderung nötig (Validierung bestand bereits serverseitig).
+- **Referenz:** Findings I1 und I3 in Kap. 3.5.
+- **Aus Evaluation abgeleitet?:** **Ja** – direkte Reaktion auf die Findings I1 und I3.
 
 ## 5. Projektorganisation [Optional]
 

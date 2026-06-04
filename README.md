@@ -62,7 +62,8 @@ Die Durchführung erfolgte phasenbasiert entlang des im Unterricht eingeführten
 - **Variantenüberblick:** Mit der Methode Crazy 8s wurden mehrere Varianten für das zentrale Feature **Kontaktaufnahme auf der Detailseite** skizziert. Im Fokus standen Klarheit, Struktur und ein einfacher Happy Path.
 - **Skizzen:** Untersucht wurden u. a. eine Variante mit interner Nachrichtenfunktion und eine Variante mit klarer Kontaktkarte und direktem E-Mail-Button. Die Varianten unterschieden sich vor allem in Umfang und Komplexität der Kontaktaufnahme.
 
-> _Platzhalter: Foto/Scan der Crazy-8s-Skizzen einfügen (z. B. `docs/sketches/crazy8s.png`)._
+![Crazy-8s-Skizzen zur Kontaktaufnahme auf der Detailseite](docs/screenshots/crazy8s.png)
+*Crazy-8s-Skizzen: verschiedene Varianten für den Kontaktbereich.*
 
 ### 3.3 Decide
 
@@ -78,7 +79,8 @@ Die Durchführung erfolgte phasenbasiert entlang des im Unterricht eingeführten
   - Bewusst einfaches visuelles Design, damit Struktur und Interaktionen im Vordergrund stehen.
   - Homepage erklärt den Zweck und führt mit klarem Call-to-Action zur Inserate-Übersicht.
 
-> _Platzhalter: Screenshots der wichtigsten Figma-Screens einfügen (Startseite, Übersicht, Detailseite)._
+![Figma-Mockup von Homie](docs/screenshots/figma.png)
+*Auszug aus dem Figma-Mockup (Übung 10) als Referenz für die Umsetzung.*
 
 ### 3.4 Prototype
 
@@ -95,7 +97,20 @@ Die Durchführung erfolgte phasenbasiert entlang des im Unterricht eingeführten
   - `/profil`, `/profil/neu`, `/profil/[id]`, `/profil/[id]/bearbeiten` – Profil & Matching
 - **User Interface Design:** Reduzierte, ruhige Oberfläche mit warmer Farbpalette (Off-White-Hintergrund, Terrakotta-Akzent), Karten-Layout für Inserate, gut sichtbarer E-Mail-Button auf der Detailseite und klaren Statusmeldungen (Erfolg/Fehler).
 
-> _Platzhalter: Screenshots der fertigen App einfügen, je mit kurzer Beschreibung – empfohlen: Startseite, Inserate-Übersicht, Detailseite mit Kontaktkarte, Formular „Inserat erstellen", Profilseite mit Vorschlägen._
+![Startseite von Homie mit Einstieg und Erklärung](docs/screenshots/start.png)
+*Startseite: Einstieg, Erklärung des Ablaufs und Call-to-Action.*
+
+![Inserate-Übersicht mit Suche und Preisfilter](docs/screenshots/uebersicht.png)
+*Inserate-Übersicht: Karten mit Bild, Preis und Ort, dazu Suche und Preisfilter.*
+
+![Detailseite eines Inserats mit Kontaktkarte](docs/screenshots/detailseite.png)
+*Detailseite: alle Informationen zur WG sowie der E-Mail-Kontaktbutton.*
+
+![Formular zum Erstellen eines Inserats](docs/screenshots/formular.png)
+*Formular „Inserat erstellen" mit Pflichtfeldern und Kategorien.*
+
+![Profilseite mit passenden WG-Vorschlägen](docs/screenshots/profil.png)
+*Profilseite: passende WG-Vorschläge auf Basis des Profils, plus „Alle Inserate anzeigen".*
 
 - **Designentscheidungen:**
   - Karten zeigen Preis und Ort direkt, damit Suchende sich schnell orientieren können.
@@ -119,8 +134,6 @@ Die Durchführung erfolgte phasenbasiert entlang des im Unterricht eingeführten
   - **Datenmodell Inserat:** `title`, `description`, `location`, `price`, `size`, `contactName`, `contactEmail`, `imageUrl`, `availableFrom`, `features[]`, `categories[]`, `createdAt`.
   - **Datenmodell Profil:** `name`, `email`, `role` (suchend/inserierend), `categories[]`, `preferredLocation`, `maxPrice`, `bio`, `createdAt`.
 - **Deployment:** Netlify, mit `MONGODB_URI` als Environment-Variable. URL: **https://pthomie.netlify.app/**
-
-> _Platzhalter: Falls die Live-URL abweicht, hier ersetzen._
 
 - **Besondere Entscheidungen / Trade-offs:** Verzicht auf Login (Prototyp-Scope); Bild-URL statt Upload; bewusst keine UI-Bibliothek, sondern ein schlankes eigenes Design-System für volle Kontrolle und Konsistenz.
 
@@ -181,7 +194,7 @@ Die Durchführung erfolgte phasenbasiert entlang des im Unterricht eingeführten
   - **Frontend:** Profil-Seiten (`src/routes/profil/`), Komponenten `ProfileForm.svelte` und `CategoryPicker.svelte`; Match-Badges auf `InseratCard.svelte`; Kategorien im `InseratForm.svelte` und auf der Detailseite.
   - **Backend:** Form Actions in `src/routes/profil/neu/+page.server.js`, `src/routes/profil/[id]/+page.server.js` (Matching im `load`) und `.../bearbeiten/+page.server.js`; Matching-Logik in `src/lib/matching.js`; Validierung in `src/lib/profileValidation.js`.
   - **Datenbank:** Neue Collection `profile` in MongoDB (CRUD über `getProfileCollection()` in `src/lib/server/db.js`). Inserate erhalten ein zusätzliches Feld `categories` als Grundlage für das Matching.
-- **Referenz:** Beschreibung in Kap. 2 und 3.4; Screenshot der Profilseite mit Vorschlägen (siehe Platzhalter in 3.4.1).
+- **Referenz:** Beschreibung in Kap. 2 und 3.4; Screenshot der Profilseite mit Vorschlägen in Kap. 3.4.1.
 - **Aus Evaluation abgeleitet?:** Nein – produktseitige Erweiterung über den Mindestumfang hinaus. Die für das Matching eingeführte Kategorien-Auswahl schafft zugleich die Grundlage, das in der Evaluation identifizierte Problem I1 (Freitext-Eingabe) künftig auch beim Ausstattungsfeld strukturiert zu lösen.
 
 ### 4.2 Weitere Erweiterungen im Mindestumfang-Bereich
@@ -194,7 +207,7 @@ Die Durchführung erfolgte phasenbasiert entlang des im Unterricht eingeführten
 ## 5. Projektorganisation [Optional]
 
 - **Repository & Struktur:** Git/GitHub. Quellcode unter `src/` (Routen unter `src/routes/`, wiederverwendbare Komponenten und Module unter `src/lib/`), Beispiel-Daten unter `scripts/seed.js`, Konfiguration im Projekt-Root (`svelte.config.js`, `netlify.toml`, `package.json`).
-- **Repository-URL:** _[GitHub-URL eintragen]_
+- **Repository-URL:** https://github.com/KingBali23/Homie_Prototyping
 - **Commit-Praxis:** sprechende Commits je abgeschlossener Funktion/Anpassung.
 
 ## 6. KI-Deklaration
